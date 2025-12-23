@@ -1,0 +1,72 @@
+:root {
+    font-family: 'Inter', sans-serif;
+    --color-primary: #960018; /* Merah Marun Tua */
+    --color-secondary: #cb4c46; /* Merah Muda Salmon */
+    --color-dark: #3c0000; /* Cokelat Tua / Hitam */
+    --color-bg-light: #f8f8f8; /* Cream/Putih Latar */
+    --color-text-dark: #333333;
+}
+h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+}
+.bg-primary { background-color: var(--color-primary); }
+.text-primary { color: var(--color-primary); }
+.bg-dark { background-color: var(--color-dark); }
+.text-dark { color: var(--color-dark); }
+.bg-secondary-light { background-color: #ffe4e6; }
+.text-secondary { color: var(--color-secondary); }
+.card { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+
+/* Custom Styles for Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Fixed Navbar Style */
+#main-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Utility for QRIS Code */
+.qris-box {
+    background-color: #f7f7f7;
+    border: 2px solid #e5e5e5;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Admin Styles */
+.admin-sidebar {
+    width: 280px;
+    background-color: var(--color-dark);
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+.admin-nav-item {
+    transition: background-color 0.2s;
+}
+.admin-nav-item:hover {
+    background-color: var(--color-primary);
+}
+.admin-nav-item.active {
+    background-color: var(--color-primary);
+    border-left: 5px solid var(--color-secondary);
+}
+.admin-content-area {
+    background-color: var(--color-bg-light);
+    flex-grow: 1;
+}
+/* Mobile adjustment for Admin Sidebar */
+@media (max-width: 768px) {
+     .admin-sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 50;
+        height: 100%;
+    }
+    .admin-sidebar.open {
+        transform: translateX(0);
+    }
+}
