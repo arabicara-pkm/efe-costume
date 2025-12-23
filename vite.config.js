@@ -45,6 +45,7 @@ export default defineConfig({
                 cleanupOutdatedCaches: true,
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
                 navigateFallback: null,
+                globIgnores: ['**/manifest.webmanifest', '**/manifest.json'],
             }
         }),
     ],
