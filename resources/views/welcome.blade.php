@@ -165,64 +165,80 @@
             </p>
 
             <div class="flex flex-col lg:flex-row gap-8">
+
                 <div class="w-full lg:w-72 flex-shrink-0 bg-white p-6 rounded-xl card h-fit">
                     <h3 class="text-lg font-semibold border-b pb-2 mb-4 text-primary">Filter Kostum</h3>
                     <div class="space-y-4 text-sm">
                         <div>
                             <h4 class="font-medium mb-2">Jenis Tari</h4>
-                            <div class="flex items-center mb-1"><input type="checkbox" id="Jenis Tari-Bali"
-                                    class="rounded text-primary focus:ring-primary"><label for="Jenis Tari-Bali"
-                                    class="ml-2 text-gray-700">Bali</label></div>
-                            <div class="flex items-center mb-1"><input type="checkbox" id="Jenis Tari-Jawa"
-                                    class="rounded text-primary focus:ring-primary"><label for="Jenis Tari-Jawa"
-                                    class="ml-2 text-gray-700">Jawa</label></div>
+                            <div class="flex items-center mb-1">
+                                <input type="checkbox" id="filter-bali" class="rounded text-primary focus:ring-primary">
+                                <label for="filter-bali" class="ml-2 text-gray-700">Tari Bali</label>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <input type="checkbox" id="filter-jawa" class="rounded text-primary focus:ring-primary">
+                                <label for="filter-jawa" class="ml-2 text-gray-700">Tari Jawa</label>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <input type="checkbox" id="filter-sunda"
+                                    class="rounded text-primary focus:ring-primary">
+                                <label for="filter-sunda" class="ml-2 text-gray-700">Tari Sunda</label>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex-1">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {{-- Item 1 --}}
-                        <div class="bg-white rounded-xl card overflow-hidden transform hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
-                            onclick="handleNav('detail')">
-                            <div class="h-60 w-full overflow-hidden"><img src="{{ asset('images/tarijaipong.jpg') }}"
-                                    alt="Jaipong" class="w-full h-full object-cover"></div>
-                            <div class="p-4">
-                                <h3 class="font-semibold text-lg truncate">Kostum Tari Jaipong</h3>
-                                <p class="text-primary font-bold mt-1">Rp 150.000 / Hari</p><button
-                                    class="w-full mt-3 px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-dark transition-colors">Lihat
-                                    Detail</button>
+
+                        @forelse($kostums as $item)
+                            <div
+                                class="bg-white rounded-xl card overflow-hidden transform hover:scale-[1.02] transition-transform duration-300 cursor-pointer group">
+
+                                <div class="h-60 w-full overflow-hidden bg-gray-100 relative">
+                                    @if ($item->gambar)
+                                        <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama }}"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    @else
+                                        <div
+                                            class="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
+                                            <i data-lucide="image-off" class="w-10 h-10"></i>
+                                        </div>
+                                    @endif
+
+                                    <div
+                                        class="absolute top-2 left-2 bg-white/90 px-2 py-1 rounded text-xs font-bold text-dark shadow-sm">
+                                        {{ $item->kategori }}
+                                    </div>
+                                </div>
+
+                                <div class="p-4">
+                                    <h3 class="font-semibold text-lg truncate text-dark">{{ $item->nama }}</h3>
+                                    <p class="text-primary font-bold mt-1">
+                                        Rp {{ number_format($item->harga, 0, ',', '.') }} <span
+                                            class="text-sm text-gray-500 font-normal">/ Hari</span>
+                                    </p>
+
+                                    <a href="{{ route('kostum.detail', $item->id) }}"
+                                        class="block w-full text-center mt-3 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-dark transition-colors shadow-md">
+                                        Lihat Detail
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        {{-- Item 2 --}}
-                        <div class="bg-white rounded-xl card overflow-hidden transform hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
-                            onclick="handleNav('detail')">
-                            <div class="h-60 w-full overflow-hidden"><img src="{{ asset('images/tarikecak.jpg') }}"
-                                    alt="Kecak" class="w-full h-full object-cover"></div>
-                            <div class="p-4">
-                                <h3 class="font-semibold text-lg truncate">Kostum Tari Kecak</h3>
-                                <p class="text-primary font-bold mt-1">Rp 195.000 / Hari</p><button
-                                    class="w-full mt-3 px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-dark transition-colors">Lihat
-                                    Detail</button>
+                        @empty
+                            <div class="col-span-full text-center py-10 text-gray-500">
+                                <i data-lucide="package-open" class="w-12 h-12 mx-auto mb-3 text-gray-300"></i>
+                                <p>Belum ada kostum yang tersedia saat ini.</p>
                             </div>
-                        </div>
-                        {{-- Item 3 --}}
-                        <div class="bg-white rounded-xl card overflow-hidden transform hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
-                            onclick="handleNav('detail')">
-                            <div class="h-60 w-full overflow-hidden"><img src="{{ asset('images/taripiring.png') }}"
-                                    class="w-full h-full object-cover"></div>
-                            <div class="p-4">
-                                <h3 class="font-semibold text-lg truncate">Kostum Tari Piring</h3>
-                                <p class="text-primary font-bold mt-1">Rp 250.000 / Hari</p><button
-                                    class="w-full mt-3 px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-dark transition-colors">Lihat
-                                    Detail</button>
-                            </div>
-                        </div>
+                        @endforelse
+
                     </div>
+
                     <div class="text-center mt-10">
-                        <button
-                            class="px-6 py-3 border border-dark text-dark font-semibold rounded-lg hover:bg-gray-200 transition-colors">Lihat
-                            Lebih Banyak</button>
+                        <a href="{{ route('katalog') }}"
+                            class="px-6 py-3 border border-dark text-dark font-semibold rounded-lg hover:bg-gray-200 transition-colors inline-block">
+                            Lihat Lebih Banyak
+                        </a>
                     </div>
                 </div>
             </div>
@@ -259,7 +275,64 @@
             </div>
         </section>
 
-        {{-- Section ID Login telah dihapus sesuai permintaan --}}
+        <section id="about" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 rounded-xl">
+            <h2 class="text-4xl font-extrabold serif text-dark mb-6 text-center">Tentang Kami: EFECostume</h2>
+            <p class="text-center text-lg text-gray-600 mb-10">Kami berdedikasi untuk melestarikan dan menyediakan
+                kostum tari tradisional berkualitas tinggi.</p>
+            <div class="bg-white p-8 rounded-xl card space-y-6">
+                <h3 class="text-2xl font-semibold border-b pb-3 text-primary">Visi & Misi</h3>
+                <p>Visi kami adalah menjadi platform penyewaan kostum tari terkemuka di Indonesia, mendukung setiap
+                    penari untuk tampil memukau tanpa batas. Misi kami meliputi menjaga kualitas dan keaslian setiap
+                    kostum.</p>
+                <h3 class="text-2xl font-semibold border-b pb-3 text-primary">Koleksi Kami</h3>
+                <p>Kami memiliki koleksi lengkap dari berbagai daerah, termasuk Jawa, Bali, Sunda, dan Sumatera. Setiap
+                    kostum diperiksa secara berkala untuk memastikan kebersihan dan kondisi optimal.</p>
+                <div class="mt-8 border-t pt-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-primary">Apa Kata Mereka?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-xl card space-y-2 border-l-4 border-primary">
+                            <div class="text-yellow-500 flex"><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i></div>
+                            <p class="italic text-sm">"Kostumnya sangat terawat dan mudah disewa!"</p><span
+                                class="font-semibold text-xs">Agnes P.</span>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl card space-y-2 border-l-4 border-primary">
+                            <div class="text-yellow-500 flex"><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i><i data-lucide="star"
+                                    class="w-4 h-4 fill-yellow-500"></i></div>
+                            <p class="italic text-sm">"Pilihan warna dan jenis tari sangat lengkap."</p><span
+                                class="font-semibold text-xs">Bima S.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-50 rounded-xl">
+            <h2 class="text-4xl font-extrabold serif text-dark mb-6 text-center">Hubungi Kami</h2>
+            <p class="text-center text-lg text-gray-600 mb-10">Kami siap membantu pertanyaan seputar penyewaan dan
+                layanan kami.</p>
+            <div class="bg-white p-8 rounded-xl card space-y-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold border-b pb-3 text-primary mb-4">Informasi Kontak</h3>
+                    <div class="space-y-4 text-gray-700">
+                        <p class="flex items-center space-x-2"><i data-lucide="mail"
+                                class="w-5 h-5 text-dark"></i><span>Email: support@efecostume.com</span></p>
+                        <p class="flex items-center space-x-2"><i data-lucide="phone"
+                                class="w-5 h-5 text-dark"></i><span>Telepon: (021) 1234 5678</span></p>
+                        <p class="flex items-center space-x-2"><i data-lucide="map-pin"
+                                class="w-5 h-5 text-dark"></i><span>Alamat: Jl. Cipadung No. 10, Kota Bandung</span>
+                        </p>
+                    </div>
+                </div>
+        </section>
 
     </main>
 

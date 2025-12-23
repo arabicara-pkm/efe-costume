@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminKostumController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
@@ -15,9 +16,7 @@ use App\Http\Controllers\ProfileController;
 // ====================================================
 
 // Halaman Utama
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Katalog & Detail Kostum (Biasanya bisa dilihat tamu juga)
 Route::get('/katalog', [CatalogController::class, 'index'])->name('katalog');
