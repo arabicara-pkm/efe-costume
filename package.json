@@ -3,8 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build && copy public\\build\\manifest.webmanifest public\\manifest.json",
-        "dev": "vite"
+        "dev": "vite",
+        "build": "vite build && cp public/build/manifest.webmanifest public/manifest.json"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
